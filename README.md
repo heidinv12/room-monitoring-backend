@@ -35,3 +35,7 @@ The following is a diagram of how the endpoints in the backend interact with Dyn
 ```dataProcessing``` is used by [room-monitoring-serial-communicator](https://github.com/heidinv12/room-monitoring-serial-comm), it expects five values as parameters: door sensor value, temperature, humidity, motion snesor and gas sensor value. The endpoint formats the data and stores it in an S3 bucket as Json files.
 
 ```notificationWorker``` is triggered by an S3 event, more specifically by the creation of a new object in the specifies S3 bucket. This function get a list of all phone numbers registered as well as the latest temperature and humidity configuration from DynamoDB. It then compares the latest configuration against the values newly stored in S3(which represent the room's real status). If conditions are met/unmet an alert message will be sent to each phone numbe ron the list uwing TWILIO API.
+
+Here is what the phone notifications look like:
+
+![](/media/backend_notification.JPG)
