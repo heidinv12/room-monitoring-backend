@@ -38,4 +38,4 @@ The following is a diagram of how the endpoints in the backend interact with Dyn
 
 Here is what the phone notifications look like:
 
-![](/media/backend_notification.JPG)
+![](/media/backend_notification.jpg)
