@@ -4,7 +4,7 @@ This application was originally created to work along the following projects:
 
 [room-monitoring-sys](https://github.com/heidinv12/room-monitoring-sys)
 
-[room-monitoring-serial-comm](https://github.com/heidinv12/room-monitoring-serial-comm)
+[room-monitoring-serial-communicator](https://github.com/heidinv12/room-monitoring-serial-comm)
 
 [room-monitoring-frontend](https://github.com/heidinv12/room-monitoring-frontend)
 
