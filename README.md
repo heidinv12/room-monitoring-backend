@@ -39,3 +39,11 @@ The following is a diagram of how the endpoints in the backend interact with Dyn
 Here is what the phone notifications look like:
 
 ![](/media/backend_notification.jpg)
+
+
+**To run the code:**
+
+- install serverless framework ```npm install -g serverless```
+- run ```serverless```
+
+
