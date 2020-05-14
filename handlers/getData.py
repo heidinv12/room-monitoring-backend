@@ -17,23 +17,25 @@ def get_data(event, context):
         motion_trigger_dates = []
         smoke_triggered_dates = []
         door_trigger_dates = []
-        for key in s3_keys['Contents']:
-            s3_obj = s3.get_object(
-                Bucket=os.getenv('S3_BUCKET'),
-                Key=key['Key']
-            )
-            item = json.loads(s3_obj['Body'].read().decode('utf-8'))
-            if item['MotionDetectorState'] == 'Motion Detected':
-                if is_one_min_apart(motion_trigger_dates, item['Date']):
-                    motion_trigger_dates.append(item['Date'])
-            elif item['SmokeSensorState'] == 'Alert':
-                if is_one_min_apart(smoke_triggered_dates, item['Date']):
-                    smoke_triggered_dates.append(item['Date'])
-            elif item['Door'] == 'Alert':
-                if is_one_min_apart(door_trigger_dates, item['Date']):
-                    door_trigger_dates.append(item['Date'])
+        
+        if 'Contents' in s3_keys:
+            for key in s3_keys['Contents']:
+                s3_obj = s3.get_object(
+                    Bucket=os.getenv('S3_BUCKET'),
+                    Key=key['Key']
+                )
+                item = json.loads(s3_obj['Body'].read().decode('utf-8'))
+                if item['MotionDetectorState'] == 'Motion Detected':
+                    if is_one_min_apart(motion_trigger_dates, item['Date']):
+                        motion_trigger_dates.append(item['Date'])
+                elif item['SmokeSensorState'] == 'Alert':
+                    if is_one_min_apart(smoke_triggered_dates, item['Date']):
+                        smoke_triggered_dates.append(item['Date'])
+                elif item['Door'] == 'Alert':
+                    if is_one_min_apart(door_trigger_dates, item['Date']):
+                        door_trigger_dates.append(item['Date'])
 
-            s3_data.append(item)
+                s3_data.append(item)
 
         dynamodb = boto3.resource('dynamodb')
         config_table = dynamodb.Table(os.getenv('CONFIG_TABLE'))
