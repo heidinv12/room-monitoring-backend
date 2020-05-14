@@ -43,9 +43,9 @@ def get_data(event, context):
 
         # get latest configuration
         config_data = config_table.scan()['Items']
-        newest_config = sorted(config_data, key=itemgetter('CreatedAt'), reverse=True)[0]
+        newest_config = sorted(config_data, key=itemgetter('CreatedAt'), reverse=True)[0] if config_data else None
         phone_response = phones_table.scan()['Items']
-        latest_room_status = sorted(s3_data, key=itemgetter('Date'), reverse=True)[0]
+        latest_room_status = sorted(s3_data, key=itemgetter('Date'), reverse=True)[0] if s3_data else None
 
         data = {
             'Configurations': newest_config,
@@ -53,8 +53,8 @@ def get_data(event, context):
             'MotionSensor': motion_trigger_dates,
             'SmokeAlert': smoke_triggered_dates,
             'DoorSensor': door_trigger_dates,
-            'RoomTemperature': latest_room_status['Temperature'],
-            'RoomHumidity': latest_room_status['Humidity']
+            'RoomTemperature': latest_room_status['Temperature'] if latest_room_status else '',
+            'RoomHumidity': latest_room_status['Humidity'] if latest_room_status else ''
         }
         headers = {
             'content-type': 'application/json',
